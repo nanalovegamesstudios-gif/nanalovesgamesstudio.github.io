@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nanalove Games-Studios</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background-color: #121212; /* Fondo negro mate */
+            color: #ffffff;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+            display: flex; height: 100vh; overflow: hidden;
+        }
+        /* --- MENÚ LATERAL IZQUIERDO --- */
+        .sidebar {
+            width: 260px; background-color: #121212; border-right: 4px solid #cc0000;
+            display: flex; flex-direction: column; padding: 50px 20px; gap: 35px;
+        }
+        .menu-btn {
+            background: transparent; color: #ffffff; border: 2px solid #cc0000;
+            padding: 12px 10px; font-size: 1.1rem; font-weight: bold; cursor: pointer;
+            text-transform: uppercase; letter-spacing: 2px; transition: all 0.3s ease; text-align: center;
+        }
+        .menu-btn:hover, .menu-btn.active {
+            background-color: #cc0000; color: #121212; box-shadow: 0 0 12px rgba(204, 0, 0, 0.4);
+        }
+        /* --- CONTENEDOR DERECHO PRINCIPAL --- */
+        .main-content { flex: 1; display: flex; flex-direction: column; overflow-y: auto; }
+        .header { padding: 25px; text-align: center; border-bottom: 4px solid #cc0000; }
+        .header h1 { font-family: 'Georgia', serif; font-size: 2.8rem; letter-spacing: 5px; text-transform: uppercase; font-weight: bold; }
+        .header p { font-family: 'Georgia', serif; color: #ffffff; font-size: 1.4rem; letter-spacing: 3px; margin-top: 5px; text-transform: lowercase; font-style: italic; }
+        .content-body { padding: 40px; display: flex; justify-content: center; }
+        .section { display: none; width: 100%; max-width: 800px; }
+
+        /* --- SECCIÓN INICIO --- */
+        .inicio-container { display: flex; flex-direction: column; align-items: center; gap: 30px; margin: 0 auto; max-width: 650px; }
+        .welcome-card { border: 4px solid #cc0000; background-color: #ffffff; padding: 25px; width: 100%; max-width: 320px; border-radius: 4px; text-align: center; }
+        .welcome-text { color: #121212; font-family: 'Georgia', serif; font-size: 2.8rem; font-weight: 900; line-height: 1.1; }
+        .personal-description { color: #ffffff; font-size: 1.15rem; line-height: 1.7; text-align: center; padding: 0 10px; max-width: 550px; }
+
+        /* --- MURO DE PUBLICACIONES LIBRE --- */
+        .publicacion { border-left: 4px solid #cc0000; padding-left: 20px; margin-bottom: 45px; }
+        .publicacion h3 { font-size: 1.5rem; color: #cc0000; margin-bottom: 10px; letter-spacing: 1px; }
+        .publicacion p { font-size: 1.1rem; line-height: 1.6; color: #dddddd; }
+        .post-btn { display: inline-block; background: transparent; color: #ffffff; border: 1px solid #cc0000; padding: 8px 20px; margin-top: 15px; text-decoration: none; font-weight: bold; font-size: 0.9rem; }
+        .post-btn:hover { background-color: #cc0000; color: #121212; }
+    </style>
+</head>
+<body>
+
+    <!-- MENÚ LATERAL IZQUIERDO -->
+    <div class="sidebar">
+        <button id="btn-inicio" class="menu-btn active" onclick="showSection('inicio', 'btn-inicio')">Inicio</button>
+        <button id="btn-proyectos" class="menu-btn" onclick="showSection('proyectos', 'btn-proyectos')">Proyectos</button>
+        <button id="btn-vlog" class="menu-btn" onclick="showSection('vlog', 'btn-vlog')">blog</button>
+        <button id="btn-comentarios" class="menu-btn" onclick="showSection('comentarios', 'btn-comentarios')">Comentarios</button>
+    </div>
+
+    <!-- CONTENEDOR DERECHO PRINCIPAL -->
+    <div class="main-content">
+        <div class="header">
+            <h1>NANALOVE</h1>
+            <p>games-studios</p>
+        </div>
+
+        <div class="content-body">
+            
+            <!-- SECCIÓN: INICIO -->
+            <div id="inicio" class="section" style="display: block;">
+                <div class="inicio-container">
+                    <div class="welcome-card">
+                        <div class="welcome-text">¡Hola!<br>:)</div>
+                    </div>
+                    <p class="personal-description">Este es un proyecto personal que hice para desahogarme, probar cosas nuevas y experimentar sin límites. ¡Bienvenido a mi espacio!</p>
+                </div>
+            </div>
+
+            <!-- SECCIÓN: PROYECTOS -->
+            <div id="proyectos" class="section">
+                <h2 style="color:#cc0000; margin-bottom: 30px; letter-spacing: 1px;">Proyectos Actuales</h2>
+                <div class="publicacion">
+                    <h3>Intentos</h3>
+                    <p>Aquí puedes platicar libremente de qué trata tu juego, qué misterios esconde y poner tus ideas.</p>
+                    <a href="#" class="post-btn">Descargar</a>
+                </div>
+            </div>
+
+            <!-- SECCIÓN: VLOG (Aquí se conectará tu Tumblr) -->
+            <div id="vlog" class="section">
+                <h2 style="color:#cc0000; margin-bottom: 30px; letter-spacing: 1px;">Mis pensamientos</h2>
+                
+                <!-- El lector automático de Tumblr -->
+                <div id="tumblr-feed" style="border: 2px solid #cc0000; padding: 10px; background-color: #1a1a1a;">
+                    <!-- El script jalará tu blog aquí dentro -->
+                    <script type="text/javascript" src="https://tumblr.com"></script>
+                </div>
+            </div>
+
+            <!-- SECCIÓN: COMENTARIOS -->
+            <div id="comentarios" class="section">
+                <div style="text-align: center; margin-bottom: 30px;">
+                    <div style="display: inline-block; border: 2px solid #cc0000; padding: 12px 30px; color: #ffffff; font-size: 1.1rem; font-weight: bold; letter-spacing: 2px; background-color: #121212; text-transform: uppercase;">
+                        Hazme saber qué piensas
+                    </div>
+                </div>
+                <div style="border: 2px solid #cc0000; padding: 25px; background-color: #1a1a1a; border-radius: 4px;">
+                    <div id="disqus_thread"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        function showSection(sectionId, buttonId) {
+            var sections = document.getElementsByClassName('section');
+            for (var i = 0; i < sections.length; i++) { sections[i].style.display = 'none'; }
+            var buttons = document.getElementsByClassName('menu-btn');
+            for (var j = 0; j < buttons.length; j++) { buttons[j].classList.remove('active'); }
+            document.getElementById(sectionId).style.display = 'block';
+            document.getElementById(buttonId).classList.add('active');
+        }
+
+        var disqus_config = function () {
+            this.page.url = window.location.href;  
+            this.page.identifier = 'nanalove_main'; 
+        };
+        (function() { 
+            var d = document, s = d.createElement('script');
+            s.src = 'https://disqus.com'; 
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+</body>
+</html>
