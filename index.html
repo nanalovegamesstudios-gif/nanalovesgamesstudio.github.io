@@ -53,7 +53,7 @@
     <div class="sidebar">
         <button id="btn-inicio" class="menu-btn active" onclick="showSection('inicio', 'btn-inicio')">Inicio</button>
         <button id="btn-proyectos" class="menu-btn" onclick="showSection('proyectos', 'btn-proyectos')">Proyectos</button>
-        <button id="btn-vlog" class="menu-btn" onclick="showSection('vlog', 'btn-vlog')">blog</button>
+        <button id="btn-vlog" class="menu-btn" onclick="showSection('vlog', 'btn-vlog')">Blog</button>
         <button id="btn-comentarios" class="menu-btn" onclick="showSection('comentarios', 'btn-comentarios')">Comentarios</button>
     </div>
 
@@ -78,7 +78,7 @@
 
             <!-- SECCIÓN: PROYECTOS -->
             <div id="proyectos" class="section">
-                <h2 style="color:#cc0000; margin-bottom: 30px; letter-spacing: 1px;">Proyectos Actuales</h2>
+                <h2 style="color:#cc0000; margin-bottom: 30px; letter-spacing: 1px;">Proyectos</h2>
                 <div class="publicacion">
                     <h3>Intentos</h3>
                     <p>Aquí puedes platicar libremente de qué trata tu juego, qué misterios esconde y poner tus ideas.</p>
@@ -86,13 +86,10 @@
                 </div>
             </div>
 
-            <!-- SECCIÓN: VLOG (Aquí se conectará tu Tumblr) -->
+            <!-- SECCIÓN: VLOG -->
             <div id="vlog" class="section">
-                <h2 style="color:#cc0000; margin-bottom: 30px; letter-spacing: 1px;">Mis pensamientos</h2>
-                
-                <!-- El lector automático de Tumblr -->
+                <h2 style="color:#cc0000; margin-bottom: 30px; letter-spacing: 1px;">Mis pensamientos ocasionales</h2>
                 <div id="tumblr-feed" style="border: 2px solid #cc0000; padding: 10px; background-color: #1a1a1a;">
-                    <!-- El script jalará tu blog aquí dentro -->
                     <script type="text/javascript" src="https://tumblr.com"></script>
                 </div>
             </div>
@@ -112,14 +109,27 @@
         </div>
     </div>
 
+    <!-- SISTEMA DE CONTROL DE PESTAÑAS E INYECCIÓN DE COMENTARIOS -->
     <script>
         function showSection(sectionId, buttonId) {
             var sections = document.getElementsByClassName('section');
             for (var i = 0; i < sections.length; i++) { sections[i].style.display = 'none'; }
             var buttons = document.getElementsByClassName('menu-btn');
             for (var j = 0; j < buttons.length; j++) { buttons[j].classList.remove('active'); }
+            
             document.getElementById(sectionId).style.display = 'block';
             document.getElementById(buttonId).classList.add('active');
+
+            // Fuerza a Disqus a despertar y recargarse cada vez que entras a la pestaña
+            if (sectionId === 'comentarios' && typeof DISQUS !== 'undefined') {
+                DISQUS.reset({
+                    reload: true,
+                    config: function () {  
+                        this.page.identifier = 'nanalove_main';  
+                        this.page.url = window.location.href;  
+                    }
+                });
+            }
         }
 
         var disqus_config = function () {
