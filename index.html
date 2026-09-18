@@ -16,10 +16,10 @@
             overflow: hidden;
         }
 
-        /* --- MENÚ LATERAL IZQUIERDO ADAPTABLE --- */
+        /* --- MENÚ LATERAL IZQUIERDO --- */
         .sidebar {
             width: 260px;
-            min-width: 220px; /* Evita que se colapse por completo */
+            min-width: 220px;
             background-color: #121212;
             border-right: 4px solid #cc0000;
             display: flex;
@@ -48,7 +48,7 @@
             box-shadow: 0 0 12px rgba(204, 0, 0, 0.4);
         }
 
-        /* --- CONTENEDOR DERECHO PRINCIPAL ADAPTABLE --- */
+        /* --- CONTENEDOR DERECHO PRINCIPAL --- */
         .main-content {
             flex: 1;
             display: flex;
@@ -92,7 +92,7 @@
         .section {
             display: none;
             width: 100%;
-            max-width: 750px; /* Ajustado para que no se desborde */
+            max-width: 750px;
             margin: 0 auto;
         }
 
@@ -157,35 +157,24 @@
             display: inline-block;
             background: transparent;
             color: #ffffff;
-            border: 1px solid #cc0000;
-            padding: 8px 20px;
+            border: 2px solid #cc0000;
+            padding: 10px 25px;
             margin-top: 15px;
             text-decoration: none;
             font-weight: bold;
-            font-size: 0.9rem;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
         }
 
         .post-btn:hover {
             background-color: #cc0000;
             color: #121212;
+            box-shadow: 0 0 10px rgba(204, 0, 0, 0.4);
         }
 
-        /* Lector de Tumblr responsive */
-        .tumblr-container {
-            width: 100%;
-            border: 2px solid #cc0000;
-            background-color: #1a1a1a;
-            height: 600px;
-            overflow: hidden;
-        }
-
-        .tumblr-iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        /* --- AJUSTES PARA PANTALLAS PEQUEÑAS (Celulares o Tabletas en Vertical) --- */
+        /* --- AJUSTES PARA PANTALLAS PEQUEÑAS --- */
         @media (max-width: 600px) {
             body { flex-direction: column; overflow: auto; }
             .sidebar { width: 100%; border-right: none; border-bottom: 4px solid #cc0000; padding: 20px; gap: 15px; height: auto; }
@@ -227,19 +216,21 @@
             <div id="proyectos" class="section">
                 <h2 style="color:#cc0000; margin-bottom: 30px; letter-spacing: 1px;">Proyectos</h2>
                 <div class="publicacion">
-                    <h3>Mis proyectos</h3>
+                    <h3>Mi Primera Novela Visual de Decisiones</h3>
                     <p>Aquí puedes platicar libremente de qué trata tu juego, qué misterios esconde y poner tus ideas.</p>
                     <a href="#" class="post-btn">Descargar</a>
                 </div>
             </div>
 
-            <!-- SECCIÓN: VLOG (Lector interactivo limpio e inmune a bloqueos) -->
-            <div id="vlog" class="section">
-                <h2 style="color:#cc0000; margin-bottom: 30px; letter-spacing: 1px;">Mis pensamientos</h2>
-                <div class="tumblr-container">
-                    <!-- Cambiado a formato iframe estándar que sí lee los posts en vivo -->
-                    <iframe class="tumblr-iframe" src="https://nanalovesgamesstudio.tumblr.com"></iframe>
-                </div>
+            <!-- SECCIÓN: VLOG (Con tu enlace directo súper estilizado libre de errores) -->
+            <div id="vlog" class="section" style="text-align: center; padding-top: 20px;">
+                <h2 style="color:#cc0000; margin-bottom: 20px; letter-spacing: 1px;">Mis pensamientos</h2>
+                <p style="color: #aaaaaa; margin-bottom: 30px; line-height: 1.5;">Para escribir de forma libre sin tocar códigos, abro mi diario íntimo desde la app oficial de Tumblr.</p>
+                
+                <!-- Botón gótico/rojo estilizado para abrir tu bitácora -->
+                <a href="https://nanalovesgamesstudio.tumblr.com" target="_blank" class="post-btn" style="padding: 15px 35px; font-size: 1.1rem;">
+                    Abrir Diario de Pensamientos
+                </a>
             </div>
 
             <!-- SECCIÓN: COMENTARIOS -->
@@ -249,6 +240,7 @@
                         Hazme saber qué piensas
                     </div>
                 </div>
+                <!-- Contenedor limpio de Disqus -->
                 <div style="border: 2px solid #cc0000; padding: 25px; background-color: #1a1a1a; border-radius: 4px;">
                     <div id="disqus_thread"></div>
                 </div>
@@ -258,6 +250,7 @@
     </div>
 
     <script>
+        // Sistema de pestañas optimizado para Disqus
         function showSection(sectionId, buttonId) {
             var sections = document.getElementsByClassName('section');
             for (var i = 0; i < sections.length; i++) { sections[i].style.display = 'none'; }
@@ -267,27 +260,22 @@
             document.getElementById(sectionId).style.display = 'block';
             document.getElementById(buttonId).classList.add('active');
 
-            if (sectionId === 'comentarios' && typeof DISQUS !== 'undefined') {
-                DISQUS.reset({
-                    reload: true,
-                    config: function () {  
-                        this.page.identifier = 'nanalove_main';  
-                        this.page.url = window.location.href;  
-                    }
-                });
+            // Carga o reinicia Disqus únicamente cuando la pestaña está visible en pantalla
+            if (sectionId === 'comentarios') {
+                if (typeof DISQUS === 'undefined') {
+                    var d = document, s = d.createElement('script');
+                    s.src = 'https://disqus.com'; 
+                    s.setAttribute('data-timestamp', +new Date());
+                    (d.head || d.body).appendChild(s);
+                } else {
+                    DISQUS.reset({
+                        reload: true,
+                        config: function () {  
+                            this.page.identifier = 'nanalove_main';  
+                            this.page.url = window.location.href;  
+                        }
+                    });
+                }
             }
         }
-
-        var disqus_config = function () {
-            this.page.url = window.location.href;  
-            this.page.identifier = 'nanalove_main'; 
-        };
-        (function() { 
-            var d = document, s = d.createElement('script');
-            s.src = 'https://disqus.com'; 
-            s.setAttribute('data-timestamp', +new Date());
-            (d.head || d.body).appendChild(s);
-        })();
     </script>
-</body>
-</html>
