@@ -5,277 +5,219 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nanalove Games-Studios</title>
     <style>
+        /* --- ESTILOS BASE DE TU LIENZO INDEPENDIENTE --- */
         * { box-sizing: border-box; margin: 0; padding: 0; }
         
         body {
-            background-color: #121212; /* Fondo negro mate */
+            background-color: #3b0e0e; /* El marco exterior guinda de tus dibujos */
             color: #ffffff;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-            display: flex;
-            height: 100vh;
-            overflow: hidden;
+            display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden;
         }
 
-        /* --- MENÚ LATERAL IZQUIERDO --- */
-        .sidebar {
-            width: 260px;
-            min-width: 220px;
-            background-color: #121212;
-            border-right: 4px solid #cc0000;
-            display: flex;
-            flex-direction: column;
-            padding: 40px 15px;
-            gap: 25px;
+        .pantalla-lienzo {
+            width: 100%; height: 100%; background-color: #0d0404;
+            display: flex; flex-direction: column; overflow: hidden;
         }
 
+        /* --- LOGOTIPO SUPERIOR --- */
+        .logo-header { padding: 20px 10px; text-align: center; background-color: #3b0e0e; border-bottom: 2px solid #5a1414; }
+        .logo-header h1 { font-family: 'Georgia', serif; font-size: 2.2rem; letter-spacing: 4px; text-transform: uppercase; font-weight: bold; background: #ffffff; color: #000000; display: inline-block; padding: 5px 25px; border-radius: 8px; }
+        .logo-header p { font-family: 'Georgia', serif; color: #ffffff; font-size: 1.5rem; margin-top: 8px; font-style: italic; }
+
+        /* --- CUERPO DIVIDIDO EN DOS (Contenido + Tu Menú Único) --- */
+        .zona-central { flex: 1; display: flex; overflow: hidden; }
+        
+        .panel-izquierdo { flex: 1; background-color: #210a0a; padding: 30px 20px; overflow-y: auto; }
+        
+        /* TU COLUMNA DE MENÚ EXCLUSIVA DERECHA */
+        .panel-derecho-menu {
+            width: 250px; min-width: 220px; background-color: #000000; border-left: 3px solid #3b0e0e;
+            display: flex; flex-direction: column; align-items: center; padding: 25px 15px; gap: 15px;
+        }
+
+        /* Los 4 bloques de adorno interactivo arriba de la palabra Indice */
+        .bloque-indicador { width: 100%; height: 38px; background-color: #362222; border-radius: 4px; transition: background-color 0.3s ease; }
+        
+        .titulo-indice { font-family: 'Georgia', serif; font-style: italic; font-size: 1.6rem; margin: 10px 0; color: #ffffff; }
+        
+        /* Botones de navegación */
         .menu-btn {
-            background: transparent;
-            color: #ffffff;
-            border: 2px solid #cc0000;
-            padding: 12px 10px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            transition: all 0.3s ease;
-            text-align: center;
+            width: 100%; background-color: #2e1b1b; color: #ffffff; border: 1px solid #4a2c2c;
+            padding: 12px; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: all 0.2s ease; text-align: center; border-radius: 4px;
         }
+        .menu-btn:hover, .menu-btn.active { background-color: #523333; }
+        
+        /* CABECERAS INTERNAS DE TUS PROYECTOS */
+        .cabecera-seccion { background-color: #442727; padding: 12px; text-align: center; border-radius: 4px; margin-bottom: 30px; border: 1px solid #5a3333; width: 100%; max-width: 480px; margin: 0 auto 30px auto; }
+        .cabecera-seccion h2 { font-family: 'Georgia', serif; font-style: italic; font-size: 1.5rem; font-weight: normal; color: #ffffff; }
+        .section { display: none; width: 100%; }
 
-        .menu-btn:hover, .menu-btn.active {
-            background-color: #cc0000;
-            color: #121212;
-            box-shadow: 0 0 12px rgba(204, 0, 0, 0.4);
-        }
+        /* REPRODUCTOR RETRO DE INICIO */
+        .reproductor-box { border: 3px solid #6b1818; background-color: #000000; width: 100%; max-width: 380px; margin: 0 auto 25px auto; display: flex; flex-direction: column; }
+        .rep-top-bar { background-color: #6b1818; padding: 4px 8px; font-size: 0.75rem; display: flex; gap: 15px; color: #ffb3b3; }
+        .rep-pantalla { width: 100%; background-color: #ffffff; padding: 15px; text-align: center; border-bottom: 2px solid #6b1818; }
+        .rep-pantalla h3 { color: #000000; font-size: 2.2rem; font-weight: 900; margin-bottom: 5px; letter-spacing: 2px; }
+        .rep-pantalla img { width: 100%; max-width: 220px; height: auto; display: inline-block; }
+        .rep-controles { background-color: #1a0808; padding: 10px; display: flex; align-items: center; justify-content: center; gap: 12px; }
+        .texto-desahogo { font-size: 1.05rem; line-height: 1.6; color: #e0d0d0; max-width: 400px; margin: 0 auto; text-align: left; }
 
-        /* --- CONTENEDOR DERECHO PRINCIPAL --- */
-        .main-content {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            overflow-y: auto;
-            width: 100%;
-        }
-
-        .header {
-            padding: 25px;
-            text-align: center;
-            border-bottom: 4px solid #cc0000;
-            width: 100%;
-        }
-
-        .header h1 {
-            font-family: 'Georgia', serif;
-            font-size: 2.5rem;
-            letter-spacing: 5px;
-            text-transform: uppercase;
-            font-weight: bold;
-        }
-
-        .header p {
-            font-family: 'Georgia', serif;
-            color: #ffffff;
-            font-size: 1.3rem;
-            letter-spacing: 3px;
-            margin-top: 5px;
-            text-transform: lowercase;
-            font-style: italic;
-        }
-
-        .content-body {
-            padding: 30px 20px;
-            display: flex;
-            justify-content: center;
-            width: 100%;
-        }
-
-        .section {
-            display: none;
-            width: 100%;
-            max-width: 750px;
-            margin: 0 auto;
-        }
-
-        /* --- SECCIÓN INICIO --- */
-        .inicio-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 30px;
-            width: 100%;
-        }
-
-        .welcome-card {
-            border: 4px solid #cc0000;
-            background-color: #ffffff;
-            padding: 25px;
-            width: 100%;
-            max-width: 320px;
-            border-radius: 4px;
-            text-align: center;
-        }
-
-        .welcome-text {
-            color: #121212;
-            font-family: 'Georgia', serif;
-            font-size: 2.8rem;
-            font-weight: 900;
-            line-height: 1.1;
-        }
-
-        .personal-description {
-            color: #ffffff;
-            font-size: 1.1rem;
-            line-height: 1.7;
-            text-align: center;
-            width: 100%;
-            max-width: 550px;
-        }
-
-        /* --- MURO DE PUBLICACIONES --- */
-        .publicacion {
-            border-left: 4px solid #cc0000;
-            padding-left: 20px;
-            margin-bottom: 45px;
-            width: 100%;
-        }
-
-        .publicacion h3 {
-            font-size: 1.4rem;
-            color: #cc0000;
-            margin-bottom: 10px;
-            letter-spacing: 1px;
-        }
-
-        .publicacion p {
-            font-size: 1.05rem;
-            line-height: 1.6;
-            color: #dddddd;
-        }
-
-        .post-btn {
-            display: inline-block;
-            background: transparent;
-            color: #ffffff;
-            border: 2px solid #cc0000;
-            padding: 10px 25px;
-            margin-top: 15px;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 1rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: all 0.3s ease;
-        }
-
-        .post-btn:hover {
-            background-color: #cc0000;
-            color: #121212;
-            box-shadow: 0 0 10px rgba(204, 0, 0, 0.4);
-        }
-
-        /* --- AJUSTES PARA PANTALLAS PEQUEÑAS --- */
-        @media (max-width: 600px) {
-            body { flex-direction: column; overflow: auto; }
-            .sidebar { width: 100%; border-right: none; border-bottom: 4px solid #cc0000; padding: 20px; gap: 15px; height: auto; }
-            .content-body { padding: 20px 10px; }
-            .header h1 { font-size: 2rem; }
-        }
+        /* MURO LIBRE */
+        .post-muro { border-left: 4px solid #6b1818; padding-left: 15px; margin-bottom: 40px; width: 100%; max-width: 600px; margin: 0 auto 40px auto; }
+        .post-muro h3 { font-size: 1.3rem; color: #ffb3b3; margin-bottom: 8px; }
+        .post-muro p { font-size: 1.05rem; line-height: 1.6; color: #d0c0c0; }
+        .link-descarga { display: inline-block; background: transparent; color: #ffffff; border: 1px solid #6b1818; padding: 6px 15px; margin-top: 10px; text-decoration: none; font-weight: bold; font-size: 0.85rem; }
+        
+        /* COMENTARIOS LOCALES */
+        .caja-comentarios-local { display: flex; flex-direction: column; gap: 20px; align-items: center; width: 100%; max-width: 550px; margin: 0 auto; }
+        .comentario-input-box { width: 100%; background-color: #150606; border: 1px solid #6b1818; color: #ffffff; padding: 12px; font-size: 1rem; font-family: inherit; resize: none; }
+        .lista-comentarios-render { width: 100%; display: flex; flex-direction: column; gap: 15px; }
+        .item-comentario { background-color: #120404; border: 1px solid #441717; padding: 12px; border-radius: 4px; }
+        .item-comentario span { font-size: 0.8rem; color: #ff8888; display: block; margin-bottom: 5px; }
+        
+        .firma-footer { background-color: #000000; padding: 12px; text-align: center; font-size: 0.85rem; letter-spacing: 2px; border-top: 2px solid #3b0e0e; color: #ffffff; }
     </style>
 </head>
 <body>
 
-    <!-- MENÚ LATERAL IZQUIERDO -->
-    <div class="sidebar">
-        <button id="btn-inicio" class="menu-btn active" onclick="showSection('inicio', 'btn-inicio')">Inicio</button>
-        <button id="btn-proyectos" class="menu-btn" onclick="showSection('proyectos', 'btn-proyectos')">Proyectos</button>
-        <button id="btn-vlog" class="menu-btn" onclick="showSection('vlog', 'btn-vlog')">Blog</button>
-        <button id="btn-comentarios" class="menu-btn" onclick="showSection('comentarios', 'btn-comentarios')">Comentarios</button>
-    </div>
-
-    <!-- CONTENEDOR DERECHO PRINCIPAL -->
-    <div class="main-content">
-        <div class="header">
-            <h1>NANALOVE</h1>
-            <p>games-studios</p>
+    <div class="pantalla-lienzo">
+        <div class="logo-header">
+            <h1>NANA LOVE</h1>
+            <p>Games - studios .</p>
         </div>
 
-        <div class="container-secciones content-body">
-            
-            <!-- SECCIÓN: INICIO -->
-            <div id="inicio" class="section" style="display: block;">
-                <div class="inicio-container">
-                    <div class="welcome-card">
-                        <div class="welcome-text">¡Hola!<br>:)</div>
+        <div class="zona-central">
+            <!-- PANEL IZQUIERDO DE CONTENIDO -->
+            <div class="panel-izquierdo">
+                <!-- ========================================== -->
+                <!-- PESTAÑA 1: INICIO (Tu Reproductor Retro) -->
+                <!-- ========================================== -->
+                <div id="inicio" class="section" style="display: block;">
+                    <div class="reproductor-box">
+                        <div class="rep-top-bar">
+                            <span>←</span> <span style="color: #ffffff; font-weight: bold;">Now Playing</span> <span>Library</span> <span>Rip</span> <span style="margin-left: auto;">»</span>
+                        </div>
+                        <div class="rep-pantalla">
+                            <h3>¡Hola!</h3>
+                            <h3 style="margin-top: -10px; margin-bottom: 10px;">:)</h3>
+                            <img src="avatar.png" alt="Avatar" onerror="this.src='https://placeholder.com';">
+                        </div>
+                        <div class="rep-controles">
+                            <span>■</span> <span>|◀◀</span> <div class="rep-play-circle">▶</div> <span>▶▶|</span> <span style="margin-left: 10px;">🔊</span>
+                        </div>
                     </div>
-                    <p class="personal-description">Este es un proyecto personal que hice para desahogarme, probar cosas nuevas y experimentar sin límites. ¡Bienvenido a mi espacio!</p>
-                </div>
-            </div>
 
-            <!-- SECCIÓN: PROYECTOS -->
-            <div id="proyectos" class="section">
-                <h2 style="color:#cc0000; margin-bottom: 30px; letter-spacing: 1px;">Proyectos</h2>
-                <div class="publicacion">
-                    <h3>Mi Primera Novela Visual de Decisiones</h3>
-                    <p>Aquí puedes platicar libremente de qué trata tu juego, qué misterios esconde y poner tus ideas.</p>
-                    <a href="#" class="post-btn">Descargar</a>
-                </div>
-            </div>
-
-            <!-- SECCIÓN: VLOG (Con tu enlace directo súper estilizado libre de errores) -->
-            <div id="vlog" class="section" style="text-align: center; padding-top: 20px;">
-                <h2 style="color:#cc0000; margin-bottom: 20px; letter-spacing: 1px;">Mis pensamientos</h2>
-                <p style="color: #aaaaaa; margin-bottom: 30px; line-height: 1.5;">Para escribir de forma libre sin tocar códigos, abro mi diario íntimo desde la app oficial de Tumblr.</p>
-                
-                <!-- Botón gótico/rojo estilizado para abrir tu bitácora -->
-                <a href="https://nanalovesgamesstudio.tumblr.com" target="_blank" class="post-btn" style="padding: 15px 35px; font-size: 1.1rem;">
-                    Abrir Diario de Pensamientos
-                </a>
-            </div>
-
-            <!-- SECCIÓN: COMENTARIOS -->
-            <div id="comentarios" class="section">
-                <div style="text-align: center; margin-bottom: 30px;">
-                    <div style="display: inline-block; border: 2px solid #cc0000; padding: 12px 30px; color: #ffffff; font-size: 1.1rem; font-weight: bold; letter-spacing: 2px; background-color: #121212; text-transform: uppercase;">
-                        Hazme saber qué piensas
+                    <div class="texto-desahogo">
+                        <p>Olaola,</p>
+                        <p>bienvenido/a a mi pagina,</p>
+                        <p>este es un proyecto personal</p>
+                        <p>un espacio libre para subir mis</p>
+                        <p>actualizaciones.</p>
+                        <p style="font-weight: bold; margin-top: 10px; color: #ff8888;">¡DISFRUTA!</p>
+                        <p style="margin-top: 10px;">O si no te gusta el contenido distinto,</p>
+                        <p>Puedes irte.</p>
                     </div>
                 </div>
-                <!-- Contenedor limpio de Disqus -->
-                <div style="border: 2px solid #cc0000; padding: 25px; background-color: #1a1a1a; border-radius: 4px;">
-                    <div id="disqus_thread"></div>
+
+                <!-- ========================================== -->
+                <!-- PESTAÑA 2: PROYECTOS (Muro Soberano de Arte) -->
+                <!-- ========================================== -->
+                <div id="proyectos" class="section">
+                    <div class="cabecera-seccion">
+                        <h2>Proyectos</h2>
+                    </div>
+                    <div class="post-muro">
+                        <h3>Proyecto</h3>
+                        <p>Este es el espacio. Aquí platicaré el desarrollo de forma soberana y libre.</p>
+                        <a href="#" class="link-descarga">Descargar</a>
+                    </div>
                 </div>
+
+                <!-- ========================================== -->
+                <!-- PESTAÑA 3: BLOG (Mis Pensamientos Ocasionales) -->
+                <!-- ========================================== -->
+                <div id="vlog" class="section">
+                    <div class="cabecera-seccion">
+                        <h2>Blog</h2>
+                    </div>
+                    <div class="post-muro">
+                        <h3>Primer pensamiento</h3>
+                        <p>Este es mi espacio para desahogarme de manera íntima y publicar lo que yo quiera sin censuras.</p>
+                    </div>
+                </div>
+
+                <!-- ========================================== -->
+                <!-- PESTAÑA 4: COMENTARIOS ANÓNIMOS INTEGRADOS -->
+                <!-- ========================================== -->
+                <div id="comentarios" class="section">
+                    <div class="cabecera-seccion">
+                        <h2>Comentarios</h2>
+                    </div>
+                    <div class="caja-comentarios-local">
+                        <div style="border: 2px solid #6b1818; padding: 10px 30px; font-weight: bold; font-size: 1.1rem; background-color: #120404; text-transform: uppercase;">
+                            ¡Hazme saber que piensas!
+                        </div>
+                        <textarea id="texto-comentario" class="comentario-input-box" rows="4" placeholder="Escribe tu opinión de forma anónima..."></textarea>
+                        <button class="menu-btn" style="background-color: #5a1e1e; max-width: 180px; text-transform: lowercase;" onclick="agregarComentarioLocal()">comentar</button>
+                        <div id="muro-comentarios-render" class="lista-comentarios-render">
+                            <div class="item-comentario">
+                                <span>Anónimo • Hace un momento</span>
+                                <p>Me encanta.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div> <!-- Cierre panel-izquierdo -->
+
+            <!-- PANEL DERECHO: TU MENÚ ÚNICO DERECHO -->
+            <div class="panel-derecho-menu">
+                <div id="ind-inicio" class="bloque-indicador" style="background-color: #7a3e3e;"></div>
+                <div id="ind-proyectos" class="bloque-indicador"></div>
+                <div id="ind-vlog" class="bloque-indicador"></div>
+                <div id="ind-comentarios" class="bloque-indicador"></div>
+
+                <div class="titulo-indice">Indice</div>
+
+                <button id="btn-inicio" class="menu-btn active" onclick="showSection('inicio', 'btn-inicio', 'ind-inicio')">Inicio</button>
+                <button id="btn-proyectos" class="menu-btn" onclick="showSection('proyectos', 'btn-proyectos', 'ind-proyectos')">proyectos</button>
+                <button id="btn-vlog" class="menu-btn" onclick="showSection('vlog', 'btn-vlog', 'ind-vlog')">Blog</button>
+                <button id="btn-comentarios" class="menu-btn" onclick="showSection('comentarios', 'btn-comentarios', 'ind-comentarios')">Comentarios</button>
             </div>
+        </div> <!-- Cierre zona-central -->
 
-        </div>
-    </div>
+        <div class="firma-footer">Nanalovesgamesstudios</div>
+    </div> <!-- Cierre pantalla-lienzo -->
 
+    <!-- ========================================== -->
+    <!-- MOTOR INTERACTIVO DEL ÍNDICE Y COMENTARIOS -->
+    <!-- ========================================== -->
     <script>
-        // Sistema de pestañas optimizado para Disqus
-        function showSection(sectionId, buttonId) {
+        function showSection(sectionId, buttonId, indicadorId) {
             var sections = document.getElementsByClassName('section');
             for (var i = 0; i < sections.length; i++) { sections[i].style.display = 'none'; }
+            
             var buttons = document.getElementsByClassName('menu-btn');
             for (var j = 0; j < buttons.length; j++) { buttons[j].classList.remove('active'); }
             
+            var indicadores = document.getElementsByClassName('bloque-indicador');
+            for (var k = 0; k < indicadores.length; k++) { indicadores[k].style.backgroundColor = '#362222'; }
+
             document.getElementById(sectionId).style.display = 'block';
             document.getElementById(buttonId).classList.add('active');
+            document.getElementById(indicatorId).style.backgroundColor = '#7a3e3e';
+        }
 
-            // Carga o reinicia Disqus únicamente cuando la pestaña está visible en pantalla
-            if (sectionId === 'comentarios') {
-                if (typeof DISQUS === 'undefined') {
-                    var d = document, s = d.createElement('script');
-                    s.src = 'https://disqus.com'; 
-                    s.setAttribute('data-timestamp', +new Date());
-                    (d.head || d.body).appendChild(s);
-                } else {
-                    DISQUS.reset({
-                        reload: true,
-                        config: function () {  
-                            this.page.identifier = 'nanalove_main';  
-                            this.page.url = window.location.href;  
-                        }
-                    });
-                }
-            }
+        function agregarComentarioLocal() {
+            var cajaTexto = document.getElementById('texto-comentario');
+            var mensaje = cajaTexto.value.trim();
+            if(mensaje === "") return;
+
+            var contenedor = document.getElementById('muro-comentarios-render');
+            var html = '<div class="item-comentario"><span>Anónimo • Justo ahora</span><p>' + mensaje + '</p></div>';
+            contenedor.insertAdjacentHTML('afterbegin', html);
+            cajaTexto.value = "";
         }
     </script>
+</body>
+</html>
